@@ -1,0 +1,18 @@
+{
+  "name": "Sinergitas - Rekap Laporan Kegiatan",
+  "short_name": "Sinergitas",
+  "description": "Sistem Rekapitulasi Laporan Kegiatan Sinergitas",
+  "start_url": "/dashboard",
+  "display": "standalone",
+  "background_color": "#1e3a8a",
+  "theme_color": "#1e3a8a",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+  ]
+}

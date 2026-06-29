@@ -16,21 +16,65 @@ Progressive Web App untuk rekapitulasi laporan kegiatan sinergitas dengan dukung
 
 - **Frontend:** Next.js 14, React, Tailwind CSS, PWA (Service Worker)
 - **Backend:** Next.js API Routes (REST)
-- **Database:** SQLite + Prisma ORM
+- **Database:** PostgreSQL + Prisma ORM
 - **Offline:** Dexie (IndexedDB)
 - **Charts:** Recharts
 - **Export:** xlsx, jsPDF
 
-## Instalasi
+## Instalasi Lokal
+
+1. Buat database PostgreSQL gratis di [Neon](https://neon.tech) atau [Supabase](https://supabase.com)
+2. Salin connection string ke `.env`:
 
 ```bash
-cd sinergitas-pwa
+cp .env.example .env
+# Edit DATABASE_URL dan JWT_SECRET
+```
+
+3. Jalankan:
+
+```bash
 npm install
 npm run db:setup
 npm run dev
 ```
 
 Buka [http://localhost:3000](http://localhost:3000)
+
+## Deploy ke Vercel
+
+### 1. Siapkan PostgreSQL
+
+Buat database di salah satu layanan ini (gratis):
+
+- [Neon](https://neon.tech) (disarankan)
+- [Vercel Postgres](https://vercel.com/storage/postgres)
+- [Supabase](https://supabase.com)
+
+### 2. Environment Variables di Vercel
+
+Di **Project Settings → Environment Variables**, tambahkan:
+
+| Variable | Contoh |
+|----------|--------|
+| `DATABASE_URL` | `postgresql://user:pass@host/db?sslmode=require` |
+| `JWT_SECRET` | string acak panjang (min. 32 karakter) |
+
+### 3. Deploy
+
+Push ke GitHub dan import project di Vercel. Build otomatis menjalankan:
+
+```
+prisma generate → prisma migrate deploy → next build
+```
+
+### 4. Seed data (sekali)
+
+Setelah deploy pertama, jalankan seed dari komputer lokal:
+
+```bash
+DATABASE_URL="postgresql://..." npm run db:seed
+```
 
 ## Akun Demo
 
@@ -42,12 +86,13 @@ Buka [http://localhost:3000](http://localhost:3000)
 
 ## Scripts
 
-| Command           | Deskripsi                    |
-|-------------------|------------------------------|
-| `npm run dev`     | Development server           |
-| `npm run build`   | Production build             |
-| `npm run db:setup`| Migrate DB + seed data       |
-| `npm run db:seed` | Seed data demo               |
+| Command              | Deskripsi                         |
+|----------------------|-----------------------------------|
+| `npm run dev`        | Development server                |
+| `npm run build`      | Production build                  |
+| `npm run vercel-build` | Build + migrate (untuk Vercel)  |
+| `npm run db:setup`   | Migrate DB + seed data            |
+| `npm run db:seed`    | Seed data demo                    |
 
 ## Struktur Role
 
@@ -62,7 +107,6 @@ Aplikasi dapat di-install ke home screen (mobile/desktop). Mode offline aktif un
 ## Environment
 
 ```env
-DATABASE_URL="file:./dev.db"
+DATABASE_URL="postgresql://USER:PASSWORD@HOST/DATABASE?sslmode=require"
 JWT_SECRET="your-secret-key"
 ```
-"# sinergitas" 

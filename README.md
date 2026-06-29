@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sinergitas PWA - Sistem Rekapitulasi Laporan Kegiatan
 
-## Getting Started
+Progressive Web App untuk rekapitulasi laporan kegiatan sinergitas dengan dukungan offline-first, sinkronisasi otomatis, dan dashboard monitoring.
 
-First, run the development server:
+## Fitur
+
+- **Input Laporan** — Form kegiatan dengan auto-save draft, validasi, upload dokumentasi
+- **Rekapitulasi Otomatis** — Agregasi per hari/minggu/bulan & instansi, export Excel/PDF
+- **Dashboard Monitoring** — Statistik, grafik tren, filter dinamis
+- **Manajemen User** — Role Admin, User, Viewer dengan JWT authentication
+- **Offline Sync** — Input tanpa internet, sync otomatis via IndexedDB
+- **Notifikasi** — Reminder input & update status laporan
+- **Search & Filter** — Tanggal, instansi, status, keyword
+
+## Tech Stack
+
+- **Frontend:** Next.js 14, React, Tailwind CSS, PWA (Service Worker)
+- **Backend:** Next.js API Routes (REST)
+- **Database:** SQLite + Prisma ORM
+- **Offline:** Dexie (IndexedDB)
+- **Charts:** Recharts
+- **Export:** xlsx, jsPDF
+
+## Instalasi
 
 ```bash
+cd sinergitas-pwa
+npm install
+npm run db:setup
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Buka [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Akun Demo
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Role   | Email                  | Password   |
+|--------|------------------------|------------|
+| Admin  | admin@sinergitas.id    | admin123   |
+| User   | user@sinergitas.id     | user123    |
+| Viewer | viewer@sinergitas.id   | viewer123  |
 
-## Learn More
+## Scripts
 
-To learn more about Next.js, take a look at the following resources:
+| Command           | Deskripsi                    |
+|-------------------|------------------------------|
+| `npm run dev`     | Development server           |
+| `npm run build`   | Production build             |
+| `npm run db:setup`| Migrate DB + seed data       |
+| `npm run db:seed` | Seed data demo               |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Struktur Role
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Admin** — Kelola user, setujui/tolak laporan, export rekap
+- **User** — Buat & kelola laporan sendiri
+- **Viewer** — Lihat dashboard & laporan (read-only)
 
-## Deploy on Vercel
+## PWA
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Aplikasi dapat di-install ke home screen (mobile/desktop). Mode offline aktif untuk input laporan — data tersimpan lokal dan disinkronkan saat koneksi tersedia.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Environment
+
+```env
+DATABASE_URL="file:./dev.db"
+JWT_SECRET="your-secret-key"
+```
+"# sinergitas" 
